@@ -7,7 +7,7 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.datatype.jsr310.Ja
 
 import java.io.IOException;
 
-public class InputMessageDeserializationSchema implements
+public class PurchaseDeserializationSchema implements
         DeserializationSchema<Purchase> {
 
     static ObjectMapper objectMapper = new ObjectMapper()
@@ -19,7 +19,7 @@ public class InputMessageDeserializationSchema implements
     }
 
     @Override
-    public boolean isEndOfStream(Purchase inputMessage) {
+    public boolean isEndOfStream(Purchase purchase) {
         return false;
     }
 
