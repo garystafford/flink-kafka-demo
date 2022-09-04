@@ -13,3 +13,8 @@ docker exec -it ${FLINK_CONTAINER} bash
 
 flink run -c org.example.Main /tmp/flink-kafka-demo-1.0-SNAPSHOT-all.jar
 ```
+
+## References
+
+* <https://www.baeldung.com/kafka-flink-data-pipeline>
+* <https://github.com/eugenp/tutorials/tree/master/apache-kafka/src/main/java/com/baeldung/flink>
