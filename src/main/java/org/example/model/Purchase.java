@@ -34,6 +34,22 @@ public class Purchase {
     @JsonProperty("total_purchase")
     Float totalPurchase;
 
+    public Purchase() {
+    }
+
+    public Purchase(String transactionTime, String productId, Float price, Integer quantity, Boolean isMember,
+                    Float memberDiscount, Boolean addSupplements, Float supplementPrice, Float totalPurchase) {
+        this.transactionTime = transactionTime;
+        this.productId = productId;
+        this.price = price;
+        this.quantity = quantity;
+        this.isMember = isMember;
+        this.memberDiscount = memberDiscount;
+        this.addSupplements = addSupplements;
+        this.supplementPrice = supplementPrice;
+        this.totalPurchase = totalPurchase;
+    }
+
     public String getTransactionTime() {
         return transactionTime;
     }
@@ -113,22 +129,6 @@ public class Purchase {
     public Purchase setTotalPurchase(Float totalPurchase) {
         this.totalPurchase = totalPurchase;
         return this;
-    }
-
-    public Purchase() {
-    }
-
-    public Purchase(String transactionTime, String productId, Float price, Integer quantity, Boolean isMember,
-                    Float memberDiscount, Boolean addSupplements, Float supplementPrice, Float totalPurchase) {
-        this.transactionTime = transactionTime;
-        this.productId = productId;
-        this.price = price;
-        this.quantity = quantity;
-        this.isMember = isMember;
-        this.memberDiscount = memberDiscount;
-        this.addSupplements = addSupplements;
-        this.supplementPrice = supplementPrice;
-        this.totalPurchase = totalPurchase;
     }
 
     @Override

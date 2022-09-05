@@ -19,6 +19,16 @@ public class Total {
     @JsonProperty("total_purchases")
     Float totalPurchases;
 
+    public Total() {
+    }
+
+    public Total(String transactionTime, String productId, Integer quantity, Float totalPurchases) {
+        this.transactionTime = transactionTime;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.totalPurchases = totalPurchases;
+    }
+
     public String getTransactionTime() {
         return transactionTime;
     }
@@ -53,16 +63,6 @@ public class Total {
     public Total setTotalPurchases(Float totalPurchases) {
         this.totalPurchases = totalPurchases;
         return this;
-    }
-
-    public Total() {
-    }
-
-    public Total(String transactionTime, String productId, Integer quantity, Float totalPurchases) {
-        this.transactionTime = transactionTime;
-        this.productId = productId;
-        this.quantity = quantity;
-        this.totalPurchases = totalPurchases;
     }
 
     @Override

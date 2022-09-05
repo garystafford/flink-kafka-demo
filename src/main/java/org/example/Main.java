@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello world!");
+        System.out.println("Hello Apache Flink!");
         ReadKafka();
     }
 
@@ -59,19 +59,17 @@ public class Main {
         DataStream<Total> totals = streamSource.flatMap(
                 (FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(
                         new Total(
-                            LocalDateTime.now().toString(),
-                            value.getProductId(),
-                            value.getQuantity(),
-                            value.getTotalPurchase()
-                        )
-                )
-        ).returns(Total.class);
+                                LocalDateTime.now().toString(),
+                                value.getProductId(),
+                                value.getQuantity(),
+                                value.getTotalPurchase()
+                        ))).returns(Total.class);
 
         DataStream<Total> runningTotalsGeneric = totals
                 .keyBy(Total::getProductId)
                 .reduce((t1, t2) -> {
-                    t1.quantity += t2.quantity;
-                    t1.totalPurchases += t2.totalPurchases;
+                    t1.setQuantity(t1.getQuantity() + t2.getQuantity());
+                    t1.setTotalPurchases(t1.getTotalPurchases() + t2.getTotalPurchases());
                     return t1;
                 });
 
