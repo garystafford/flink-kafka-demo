@@ -3,6 +3,7 @@ package org.example.model;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @JsonSerialize
@@ -17,12 +18,12 @@ public class Total {
     Integer quantity;
 
     @JsonProperty("total_purchases")
-    Float totalPurchases;
+    BigDecimal totalPurchases;
 
     public Total() {
     }
 
-    public Total(String transactionTime, String productId, Integer quantity, Float totalPurchases) {
+    public Total(String transactionTime, String productId, Integer quantity, BigDecimal totalPurchases) {
         this.transactionTime = transactionTime;
         this.productId = productId;
         this.quantity = quantity;
@@ -56,11 +57,11 @@ public class Total {
         return this;
     }
 
-    public Float getTotalPurchases() {
+    public BigDecimal getTotalPurchases() {
         return totalPurchases;
     }
 
-    public Total setTotalPurchases(Float totalPurchases) {
+    public Total setTotalPurchases(BigDecimal totalPurchases) {
         this.totalPurchases = totalPurchases;
         return this;
     }

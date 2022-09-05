@@ -1,5 +1,11 @@
 package org.example;
 
+// Purpose: Read sales transaction data from Kafka topic,
+//          implement transformations on the data stream,
+//          and writes resulting data to a second Kafka topic.
+// Author:  Gary A. Stafford
+// Date: 2022-09-05
+
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.connector.base.DeliveryGuarantee;
@@ -18,17 +24,17 @@ import java.time.LocalDateTime;
 
 public class Main {
 
+    // assumes PLAINTEXT authentication
     static String BOOTSTRAP_SERVERS = "kafka:29092";
     static String CONSUMER_GROUP_ID = "demo_group";
     static String INPUT_TOPIC = "demo.purchases";
     static String OUTPUT_TOPIC = "demo.totals";
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello Apache Flink!");
-        FlinkKafkaPipeline();
+        flinkKafkaPipeline();
     }
 
-    public static void FlinkKafkaPipeline() throws Exception {
+    public static void flinkKafkaPipeline() throws Exception {
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -42,19 +48,27 @@ public class Main {
 
         DataStream<Purchase> streamSource = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
-        DataStream<Total> totals = streamSource.flatMap(
-                (FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(new Total(
-                        LocalDateTime.now().toString(),
-                        value.getProductId(),
-                        value.getQuantity(),
-                        value.getTotalPurchase()
-                ))).returns(Total.class);
+//        DataStream<Total> totals = streamSource.flatMap(
+//                (FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(new Total(
+//                        LocalDateTime.now().toString(),
+//                        value.getProductId(),
+//                        value.getQuantity(),
+//                        value.getTotalPurchase()
+//                ))).returns(Total.class);
 
-        DataStream<Total> runningTotals = totals
+        DataStream<Total> runningTotals = streamSource
+                .flatMap((FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(
+                        new Total(
+                                LocalDateTime.now().toString(),
+                                value.getProductId(),
+                                value.getQuantity(),
+                                value.getTotalPurchase()
+                        ))
+                ).returns(Total.class)
                 .keyBy(Total::getProductId)
                 .reduce((t1, t2) -> {
                     t1.setQuantity(t1.getQuantity() + t2.getQuantity());
-                    t1.setTotalPurchases(t1.getTotalPurchases() + t2.getTotalPurchases());
+                    t1.setTotalPurchases(t1.getTotalPurchases().add(t2.getTotalPurchases()));
                     return t1;
                 });
 

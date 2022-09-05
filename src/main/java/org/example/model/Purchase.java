@@ -3,6 +3,7 @@ package org.example.model;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @JsonSerialize
@@ -14,7 +15,7 @@ public class Purchase {
     String productId;
 
     @JsonProperty("price")
-    Float price;
+    BigDecimal price;
 
     @JsonProperty("quantity")
     Integer quantity;
@@ -23,22 +24,22 @@ public class Purchase {
     Boolean isMember;
 
     @JsonProperty("member_discount")
-    Float memberDiscount;
+    BigDecimal memberDiscount;
 
     @JsonProperty("add_supplements")
     Boolean addSupplements;
 
     @JsonProperty("supplement_price")
-    Float supplementPrice;
+    BigDecimal supplementPrice;
 
     @JsonProperty("total_purchase")
-    Float totalPurchase;
+    BigDecimal totalPurchase;
 
     public Purchase() {
     }
 
-    public Purchase(String transactionTime, String productId, Float price, Integer quantity, Boolean isMember,
-                    Float memberDiscount, Boolean addSupplements, Float supplementPrice, Float totalPurchase) {
+    public Purchase(String transactionTime, String productId, BigDecimal price, Integer quantity, Boolean isMember,
+                    BigDecimal memberDiscount, Boolean addSupplements, BigDecimal supplementPrice, BigDecimal totalPurchase) {
         this.transactionTime = transactionTime;
         this.productId = productId;
         this.price = price;
@@ -68,11 +69,11 @@ public class Purchase {
         return this;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public Purchase setPrice(Float price) {
+    public Purchase setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -95,11 +96,11 @@ public class Purchase {
         return this;
     }
 
-    public Float getMemberDiscount() {
+    public BigDecimal getMemberDiscount() {
         return memberDiscount;
     }
 
-    public Purchase setMemberDiscount(Float memberDiscount) {
+    public Purchase setMemberDiscount(BigDecimal memberDiscount) {
         this.memberDiscount = memberDiscount;
         return this;
     }
@@ -113,20 +114,20 @@ public class Purchase {
         return this;
     }
 
-    public Float getSupplementPrice() {
+    public BigDecimal getSupplementPrice() {
         return supplementPrice;
     }
 
-    public Purchase setSupplementPrice(Float supplementPrice) {
+    public Purchase setSupplementPrice(BigDecimal supplementPrice) {
         this.supplementPrice = supplementPrice;
         return this;
     }
 
-    public Float getTotalPurchase() {
+    public BigDecimal getTotalPurchase() {
         return totalPurchase;
     }
 
-    public Purchase setTotalPurchase(Float totalPurchase) {
+    public Purchase setTotalPurchase(BigDecimal totalPurchase) {
         this.totalPurchase = totalPurchase;
         return this;
     }

@@ -10,38 +10,38 @@ running total of individual drink quantities and total purchases to output Kafka
 
 * Uber JAR for demonstration built with Gradle using JDK 8 Update 121.
 
-## Input Purchases Topic
+## Input Topic: Purchases
 
 Sample messages:
 
 ```txt
-{"transaction_time":"2022-09-0503:28:23.492804","product_id":"CS07","price":4.99,"quantity":1,"is_member":false,"member_discount":0.0,"add_supplements":false,"supplement_price":0.0,"total_purchase":4.99}
-{"transaction_time":"2022-09-0503:28:26.719131","product_id":"SF02","price":5.99,"quantity":3,"is_member":true,"member_discount":0.1,"add_supplements":true,"supplement_price":1.99,"total_purchase":21.55}
-{"transaction_time":"2022-09-0503:28:29.001819","product_id":"CS06","price":4.99,"quantity":3,"is_member":true,"member_discount":0.1,"add_supplements":false,"supplement_price":0.0,"total_purchase":13.47}
-{"transaction_time":"2022-09-0503:28:32.147178","product_id":"SF07","price":5.99,"quantity":2,"is_member":true,"member_discount":0.1,"add_supplements":false,"supplement_price":0.0,"total_purchase":10.78}
-{"transaction_time":"2022-09-0503:28:34.377841","product_id":"SF02","price":5.99,"quantity":2,"is_member":true,"member_discount":0.1,"add_supplements":true,"supplement_price":1.99,"total_purchase":14.36}
-{"transaction_time":"2022-09-0503:28:37.604685","product_id":"SF07","price":5.99,"quantity":1,"is_member":false,"member_discount":0.0,"add_supplements":true,"supplement_price":1.99,"total_purchase":7.98}
-{"transaction_time":"2022-09-0503:28:39.734322","product_id":"SF07","price":5.99,"quantity":1,"is_member":true,"member_discount":0.1,"add_supplements":false,"supplement_price":0.0,"total_purchase":5.39}
-{"transaction_time":"2022-09-0503:28:42.862669","product_id":"SC04","price":5.99,"quantity":1,"is_member":false,"member_discount":0.0,"add_supplements":true,"supplement_price":1.99,"total_purchase":7.98}
-{"transaction_time":"2022-09-0503:28:44.083328","product_id":"CS02","price":4.99,"quantity":1,"is_member":false,"member_discount":0.0,"add_supplements":false,"supplement_price":0.0,"total_purchase":4.99}
-{"transaction_time":"2022-09-0503:28:45.327688","product_id":"SF05","price":5.99,"quantity":1,"is_member":true,"member_discount":0.1,"add_supplements":false,"supplement_price":0.0,"total_purchase":5.39}
+{"transaction_time": "2022-09-05 13:01:49.530434", "product_id": "IS01", "price": 5.49, "quantity": 2, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 10.98}
+{"transaction_time": "2022-09-05 13:01:50.761210", "product_id": "IS02", "price": 5.49, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.49}
+{"transaction_time": "2022-09-05 13:01:53.005900", "product_id": "SC05", "price": 5.99, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": true, "supplement_price": 1.99, "total_purchase": 7.18}
+{"transaction_time": "2022-09-05 13:01:55.283643", "product_id": "SC04", "price": 5.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.99}
+{"transaction_time": "2022-09-05 13:01:58.074699", "product_id": "CS08", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
+{"transaction_time": "2022-09-05 13:02:00.938037", "product_id": "SF05", "price": 5.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": true, "supplement_price": 1.99, "total_purchase": 7.98}
+{"transaction_time": "2022-09-05 13:02:03.193997", "product_id": "IS02", "price": 5.49, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.94}
+{"transaction_time": "2022-09-05 13:02:04.587453", "product_id": "IS03", "price": 5.49, "quantity": 3, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 14.82}
+{"transaction_time": "2022-09-05 13:02:05.741791", "product_id": "CS10", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
+{"transaction_time": "2022-09-05 13:02:07.981253", "product_id": "CS04", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
 ```
 
-## Output Totals Topic
+## Output Topic: Totals
 
 Sample messages:
 
 ```txt
-{"transaction_time":"2022-09-05T03:23:40.645734","product_id":"IS03","quantity":25,"total_purchases":138.06999}
-{"transaction_time":"2022-09-05T03:23:40.676989","product_id":"SF05","quantity":17,"total_purchases":125.29001}
-{"transaction_time":"2022-09-05T03:23:40.687200","product_id":"CS02","quantity":19,"total_purchases":107.240005}
-{"transaction_time":"2022-09-05T03:23:40.670973","product_id":"CS06","quantity":13,"total_purchases":73.31999}
-{"transaction_time":"2022-09-05T03:23:40.676989","product_id":"SF05","quantity":19,"total_purchases":141.25002}
-{"transaction_time":"2022-09-05T03:23:40.670878","product_id":"CS07","quantity":19,"total_purchases":99.86997}
-{"transaction_time":"2022-09-05T03:23:40.687200","product_id":"CS02","quantity":20,"total_purchases":112.23}
-{"transaction_time":"2022-09-05T03:23:40.687126","product_id":"CS04","quantity":11,"total_purchases":58.869995}
-{"transaction_time":"2022-09-05T03:23:40.661675","product_id":"SC01","quantity":14,"total_purchases":92.600006}
-{"transaction_time":"2022-09-05T03:23:40.676894","product_id":"SC04","quantity":17,"total_purchases":112.15999}
+{"transaction_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":20,"total_purchases":106.76}
+{"transaction_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":4,"total_purchases":21.96}
+{"transaction_time":"2022-09-05T12:55:16.171876","product_id":"CS09","quantity":10,"total_purchases":48.90}
+{"transaction_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":16,"total_purchases":106.17}
+{"transaction_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":17,"total_purchases":114.15}
+{"transaction_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":21,"total_purchases":113.74}
+{"transaction_time":"2022-09-05T12:55:16.169814","product_id":"SC05","quantity":12,"total_purchases":84.01}
+{"transaction_time":"2022-09-05T12:55:16.173546","product_id":"SF07","quantity":12,"total_purchases":77.24}
+{"transaction_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":5,"total_purchases":29.44}
+{"transaction_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":23,"total_purchases":123.72}
 ```
 
 ## Sample Apache Flink Dashboard Screengrabs
@@ -51,6 +51,8 @@ Sample messages:
 ![Apache Flink Dashboard 2](screengrabs/flink_dashboard2.png)
 
 ## Helpful Commands
+
+# Compile and Run Flink Job
 
 ```shell
 # build uber jar using Gradle
@@ -62,6 +64,18 @@ docker cp build/libs/flink-kafka-demo-1.0-SNAPSHOT-all.jar ${FLINK_CONTAINER}:/t
 docker exec -it ${FLINK_CONTAINER} bash
 
 flink run -c org.example.Main /tmp/flink-kafka-demo-1.0-SNAPSHOT-all.jar
+```
+
+# Check the Results
+
+```shell
+export BOOTSTRAP_SERVERS="localhost:9092"
+export INPUT_TOPIC="demo.purchases"
+export OUTPUT_TOPIC="demo.totals"
+
+kafka-console-consumer.sh \
+    --bootstrap-server $BOOTSTRAP_SERVERS \
+    --topic $OUTPUT_TOPIC --from-beginning
 ```
 
 ## References
