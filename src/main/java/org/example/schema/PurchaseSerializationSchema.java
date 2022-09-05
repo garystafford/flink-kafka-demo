@@ -1,9 +1,10 @@
-package org.example;
+package org.example.schema;
 
 import org.apache.flink.api.common.serialization.SerializationSchema;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.example.model.Purchase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
