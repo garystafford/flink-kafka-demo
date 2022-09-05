@@ -1,12 +1,15 @@
 # Flink-Kafka Demo
 
-Apache Flink / Apache Kafka demonstration using 
+Apache Flink / Apache Kafka streaming data demonstration using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator).
+
+
+## Screengrabs
 
 ![Apache Flink Dashboard 1](screengrabs/flink_dashboard1.png)
 
 ![Apache Flink Dashboard 2](screengrabs/flink_dashboard2.png)
 
-## Input Topic: Purchases
+## Input Purchases Topic
 
 Sample messages:
 
@@ -23,7 +26,7 @@ Sample messages:
 {"transaction_time":"2022-09-0503:28:45.327688","product_id":"SF05","price":5.99,"quantity":1,"is_member":true,"member_discount":0.1,"add_supplements":false,"supplement_price":0.0,"total_purchase":5.39}
 ```
 
-## Output Topic: Totals
+## Output Totals Topic
 
 Sample messages:
 
