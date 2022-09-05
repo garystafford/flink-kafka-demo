@@ -32,16 +32,16 @@ Sample messages:
 Sample messages:
 
 ```txt
-{"transaction_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":20,"total_purchases":106.76}
-{"transaction_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":4,"total_purchases":21.96}
-{"transaction_time":"2022-09-05T12:55:16.171876","product_id":"CS09","quantity":10,"total_purchases":48.90}
-{"transaction_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":16,"total_purchases":106.17}
-{"transaction_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":17,"total_purchases":114.15}
-{"transaction_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":21,"total_purchases":113.74}
-{"transaction_time":"2022-09-05T12:55:16.169814","product_id":"SC05","quantity":12,"total_purchases":84.01}
-{"transaction_time":"2022-09-05T12:55:16.173546","product_id":"SF07","quantity":12,"total_purchases":77.24}
-{"transaction_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":5,"total_purchases":29.44}
-{"transaction_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":23,"total_purchases":123.72}
+{"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":20,"total_purchases":106.76}
+{"event_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":4,"total_purchases":21.96}
+{"event_time":"2022-09-05T12:55:16.171876","product_id":"CS09","quantity":10,"total_purchases":48.90}
+{"event_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":16,"total_purchases":106.17}
+{"event_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":17,"total_purchases":114.15}
+{"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":21,"total_purchases":113.74}
+{"event_time":"2022-09-05T12:55:16.169814","product_id":"SC05","quantity":12,"total_purchases":84.01}
+{"event_time":"2022-09-05T12:55:16.173546","product_id":"SF07","quantity":12,"total_purchases":77.24}
+{"event_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":5,"total_purchases":29.44}
+{"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":23,"total_purchases":123.72}
 ```
 
 ## Sample Apache Flink Dashboard Screengrabs

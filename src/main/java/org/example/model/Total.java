@@ -8,8 +8,8 @@ import java.util.Objects;
 
 @JsonSerialize
 public class Total {
-    @JsonProperty("transaction_time")
-    String transactionTime;
+    @JsonProperty("event_time")
+    String eventTime;
 
     @JsonProperty("product_id")
     String productId;
@@ -23,19 +23,19 @@ public class Total {
     public Total() {
     }
 
-    public Total(String transactionTime, String productId, Integer quantity, BigDecimal totalPurchases) {
-        this.transactionTime = transactionTime;
+    public Total(String eventTime, String productId, Integer quantity, BigDecimal totalPurchases) {
+        this.eventTime = eventTime;
         this.productId = productId;
         this.quantity = quantity;
         this.totalPurchases = totalPurchases;
     }
 
-    public String getTransactionTime() {
-        return transactionTime;
+    public String geteventTime() {
+        return eventTime;
     }
 
-    public Total setTransactionTime(String transactionTime) {
-        this.transactionTime = transactionTime;
+    public Total seteventTime(String eventTime) {
+        this.eventTime = eventTime;
         return this;
     }
 
@@ -71,12 +71,12 @@ public class Total {
         if (this == o) return true;
         if (!(o instanceof Total)) return false;
         Total total = (Total) o;
-        return getTransactionTime().equals(total.getTransactionTime()) && getProductId().equals(total.getProductId())
+        return geteventTime().equals(total.geteventTime()) && getProductId().equals(total.getProductId())
                 && getQuantity().equals(total.getQuantity()) && getTotalPurchases().equals(total.getTotalPurchases());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTransactionTime(), getProductId(), getQuantity(), getTotalPurchases());
+        return Objects.hash(geteventTime(), getProductId(), getQuantity(), getTotalPurchases());
     }
 }
