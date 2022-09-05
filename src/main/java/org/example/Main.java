@@ -48,14 +48,6 @@ public class Main {
 
         DataStream<Purchase> streamSource = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
-//        DataStream<Total> totals = streamSource.flatMap(
-//                (FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(new Total(
-//                        LocalDateTime.now().toString(),
-//                        value.getProductId(),
-//                        value.getQuantity(),
-//                        value.getTotalPurchase()
-//                ))).returns(Total.class);
-
         DataStream<Total> runningTotals = streamSource
                 .flatMap((FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(
                         new Total(
