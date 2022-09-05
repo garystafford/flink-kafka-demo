@@ -1,6 +1,14 @@
 # Flink-Kafka Demo
 
+Apache Flink / Apache Kafka demonstration using 
+
+![Apache Flink Dashboard 1](screengrabs/flink_dashboard1.png)
+
+![Apache Flink Dashboard 2](screengrabs/flink_dashboard2.png)
+
 ## Input Topic: Purchases
+
+Sample messages:
 
 ```txt
 {"transaction_time":"2022-09-0503:28:23.492804","product_id":"CS07","price":4.99,"quantity":1,"is_member":false,"member_discount":0.0,"add_supplements":false,"supplement_price":0.0,"total_purchase":4.99}
@@ -16,6 +24,8 @@
 ```
 
 ## Output Topic: Totals
+
+Sample messages:
 
 ```txt
 {"transaction_time":"2022-09-05T03:23:40.645734","product_id":"IS03","quantity":25,"total_purchases":138.06999}
