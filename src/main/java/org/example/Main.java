@@ -50,7 +50,7 @@ public class Main {
                         value.getTotalPurchase()
                 ))).returns(Total.class);
 
-        DataStream<Total> runningTotalsGeneric = totals
+        DataStream<Total> runningTotals = totals
                 .keyBy(Total::getProductId)
                 .reduce((t1, t2) -> {
                     t1.setQuantity(t1.getQuantity() + t2.getQuantity());
@@ -68,7 +68,7 @@ public class Main {
                 .setDeliverGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
                 .build();
 
-        runningTotalsGeneric.sinkTo(sink);
+        runningTotals.sinkTo(sink);
 
         env.execute("Flink Kafka Pipeline");
 
