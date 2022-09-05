@@ -1,13 +1,7 @@
 # Flink-Kafka Demo
 
-Apache Flink / Apache Kafka streaming data demonstration using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator).
-
-
-## Screengrabs
-
-![Apache Flink Dashboard 1](screengrabs/flink_dashboard1.png)
-
-![Apache Flink Dashboard 2](screengrabs/flink_dashboard2.png)
+Apache Flink / Apache Kafka streaming data demonstration
+using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator).
 
 ## Input Purchases Topic
 
@@ -42,6 +36,14 @@ Sample messages:
 {"transaction_time":"2022-09-05T03:23:40.661675","product_id":"SC01","quantity":14,"total_purchases":92.600006}
 {"transaction_time":"2022-09-05T03:23:40.676894","product_id":"SC04","quantity":17,"total_purchases":112.15999}
 ```
+
+## Sample Apache Flink Dashboard Screengrabs
+
+![Apache Flink Dashboard 1](screengrabs/flink_dashboard1.png)
+
+![Apache Flink Dashboard 2](screengrabs/flink_dashboard2.png)
+
+## Helpful Commands
 
 ```shell
 ./gradlew clean shadowJar
