@@ -1,8 +1,9 @@
-# Flink-Kafka Demo
+# Apache Flink / Apache Kafka Streaming Data Demonstration
 
 Apache Flink / Apache Kafka streaming data demonstration
 using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs
-running total of individual drink quantities and total purchases to output Kafka topic.
+running total of individual drink quantities and total purchases to output Kafka topic. Demonstration uses Kafka/Flink 
+Docker Swarm Stack from 'Sales Data Generator' project.
 
 ## Input Purchases Topic
 
