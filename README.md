@@ -2,8 +2,13 @@
 
 Apache Flink / Apache Kafka streaming data demonstration
 using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs
-running total of individual drink quantities and total purchases to output Kafka topic. Demonstration uses Kafka/Flink 
-Docker Swarm Stack from 'Sales Data Generator' project.
+running total of individual drink quantities and total purchases to output Kafka topic.
+
+* Demonstration uses
+  Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
+  from 'Sales Data Generator' project.
+
+* Uber JAR for demonstration built with Gradle using JDK 8 Update 121.
 
 ## Input Purchases Topic
 
@@ -48,14 +53,12 @@ Sample messages:
 ## Helpful Commands
 
 ```shell
+# build uber jar using Gradle
 ./gradlew clean shadowJar
 
 # Upload via the Flink UI or copy to Flink Docker image
-
-FLINK_CONTAINER="4aca1f0e5940"
-
+FLINK_CONTAINER=$(docker container ls --filter  name=kafka-flink_jobmanager --format "{{.ID}}")
 docker cp build/libs/flink-kafka-demo-1.0-SNAPSHOT-all.jar ${FLINK_CONTAINER}:/tmp
-
 docker exec -it ${FLINK_CONTAINER} bash
 
 flink run -c org.example.Main /tmp/flink-kafka-demo-1.0-SNAPSHOT-all.jar
