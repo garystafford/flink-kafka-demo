@@ -10,6 +10,10 @@ running total of individual drink quantities and total purchases to output Kafka
 
 * Uber JAR for demonstration built with Gradle using JDK 8 Update 121.
 
+## Video Demonstration
+
+Short [YouTube video](https://youtu.be/ja0M_2zdbfs) demonstration of this project (video only - no audio).
+
 ## Input Topic: Purchases
 
 Sample messages:
