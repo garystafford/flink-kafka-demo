@@ -44,15 +44,13 @@ Sample messages:
 {"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":23,"total_purchases":123.72}
 ```
 
-## Sample Apache Flink Dashboard Screengrabs
+## Apache Flink Dashboard Preview
 
 ![Apache Flink Dashboard 1](screengrabs/flink_dashboard1.png)
 
 ![Apache Flink Dashboard 2](screengrabs/flink_dashboard2.png)
 
-## Helpful Commands
-
-# Compile and Run Flink Job
+## Compile and Run Flink Job
 
 ```shell
 # build uber jar using Gradle

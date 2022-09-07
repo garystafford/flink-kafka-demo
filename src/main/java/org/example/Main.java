@@ -1,8 +1,8 @@
 package org.example;
 
-// Purpose: Read sales transaction data from Kafka topic,
-//          implement transformations on the data stream,
-//          and writes resulting data to a second Kafka topic.
+// Purpose: Read sales transaction data from a Kafka topic,
+//          aggregates product quantities and total sales on data stream,
+//          and writes results to a second Kafka topic.
 // Author:  Gary A. Stafford
 // Date: 2022-09-05
 
@@ -46,9 +46,9 @@ public class Main {
                 .setValueOnlyDeserializer(new PurchaseDeserializationSchema())
                 .build();
 
-        DataStream<Purchase> streamSource = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
+        DataStream<Purchase> purchases = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
-        DataStream<Total> runningTotals = streamSource
+        DataStream<Total> runningTotals = purchases
                 .flatMap((FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(
                         new Total(
                                 LocalDateTime.now().toString(),
