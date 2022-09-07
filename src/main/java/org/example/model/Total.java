@@ -7,7 +7,6 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonPro
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @JsonSerialize
 @NoArgsConstructor
