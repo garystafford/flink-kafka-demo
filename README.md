@@ -66,7 +66,7 @@ docker exec -it ${FLINK_CONTAINER} bash
 flink run -c org.example.Main /tmp/flink-kafka-demo-1.0-SNAPSHOT-all.jar
 ```
 
-# Check the Results
+## Check the Results
 
 ```shell
 export BOOTSTRAP_SERVERS="localhost:9092"
@@ -75,7 +75,40 @@ export OUTPUT_TOPIC="demo.totals"
 
 kafka-console-consumer.sh \
     --bootstrap-server $BOOTSTRAP_SERVERS \
+    --topic $INPUT_TOPIC --from-beginning
+
+kafka-console-consumer.sh \
+    --bootstrap-server $BOOTSTRAP_SERVERS \
     --topic $OUTPUT_TOPIC --from-beginning
+```
+
+## Docker Stack
+
+See [bitnami/kafka](https://hub.docker.com/r/bitnami/kafka) on Docker Hub for more information about running Kafka
+locally using Docker.
+
+```shell
+# optional: delete previous stack
+docker stack rm kafka-flink
+
+# deploy kafka stack
+docker swarm init
+docker stack deploy kafka-flink --compose-file docker-compose.yml
+
+# optional: to exec into Kafka container
+docker exec -it $(docker container ls --filter  name=kafka-flink_kafka --format "{{.ID}}") bash
+```
+
+### Containers
+
+Example containers:
+
+```text
+CONTAINER ID   IMAGE                      PORTS                                    NAMES
+69ad1556eb3a   flink:latest               6123/tcp, 8081/tcp                       kafka-flink_taskmanager.1...
+9f9b8e43eb21   flink:latest               6123/tcp, 8081/tcp                       kafka-flink_jobmanager.1...
+6114dc4a9824   bitnami/kafka:latest       9092/tcp                                 kafka-flink_kafka.1...
+837c0cdd1498   bitnami/zookeeper:latest   2181/tcp, 2888/tcp, 3888/tcp, 8080/tcp   kafka-flink_zookeeper.1...
 ```
 
 ## References
