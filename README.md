@@ -88,6 +88,8 @@ kafka-console-consumer.sh \
 
 ## Docker Stack
 
+Demonstration uses Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml) from 'Sales Data Generator' project.
+  
 See [bitnami/kafka](https://hub.docker.com/r/bitnami/kafka) on Docker Hub for more information about running Kafka
 locally using Docker.
 
