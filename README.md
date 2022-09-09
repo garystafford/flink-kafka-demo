@@ -8,7 +8,7 @@ running total of individual drink quantities and total purchases to output Kafka
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
   from 'Sales Data Generator' project
 
-* Uber JAR built with Gradle using JDK 8 Update 121
+* Uber JAR built with Gradle using Amazon Corretto (OpenJDK) version 11 (openjdk version "11.0.16.1" 2022-08-12 LTS)
 
 ## Video Demonstration
 
@@ -57,10 +57,13 @@ Sample messages:
 ## Compile and Run Flink Job
 
 ```shell
+# optional - set java version
+JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-11.0.16.1/Contents/Home
+
 # build uber jar using Gradle
 ./gradlew clean shadowJar
 
-# Upload via the Flink UI directly or copy to Flink Docker image
+# Upload via the Flink UI or copy to Flink Docker image
 FLINK_CONTAINER=$(docker container ls --filter  name=kafka-flink_jobmanager --format "{{.ID}}")
 docker cp build/libs/flink-kafka-demo-1.0.0-all.jar ${FLINK_CONTAINER}:/tmp
 docker exec -it ${FLINK_CONTAINER} bash
