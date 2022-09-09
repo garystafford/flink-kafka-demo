@@ -62,10 +62,10 @@ Sample messages:
 
 # Upload via the Flink UI directly or copy to Flink Docker image
 FLINK_CONTAINER=$(docker container ls --filter  name=kafka-flink_jobmanager --format "{{.ID}}")
-docker cp build/libs/flink-kafka-demo-1.0-SNAPSHOT-all.jar ${FLINK_CONTAINER}:/tmp
+docker cp build/libs/flink-kafka-demo-1.0.0-all.jar ${FLINK_CONTAINER}:/tmp
 docker exec -it ${FLINK_CONTAINER} bash
 
-flink run -c org.example.Main /tmp/flink-kafka-demo-1.0-SNAPSHOT-all.jar
+flink run -c org.example.Main /tmp/flink-kafka-demo-1.0.0-all.jar
 ```
 
 ## Check the Results
