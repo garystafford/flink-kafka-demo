@@ -1,7 +1,7 @@
 # Apache Flink / Apache Kafka Streaming Analytics Demo
 
 Apache Flink / Apache Kafka streaming data analytics demonstration
-using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs
+using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs a stream of
 running total of individual drink quantities and total purchases to output Kafka topic.
 
 * Demonstration uses
@@ -14,9 +14,9 @@ running total of individual drink quantities and total purchases to output Kafka
 
 Short [YouTube video](https://youtu.be/ja0M_2zdbfs) demonstration of this project (video only - no audio).
 
-## Input Topic: Purchases
+## Input Message Stream
 
-Sample messages:
+Sample sales purchase messages:
 
 ```txt
 {"transaction_time": "2022-09-05 13:01:49.530434", "product_id": "IS01", "price": 5.49, "quantity": 2, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 10.98}
@@ -31,9 +31,9 @@ Sample messages:
 {"transaction_time": "2022-09-05 13:02:07.981253", "product_id": "CS04", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
 ```
 
-## Output Topic: Totals
+## Output Message Stream
 
-Sample messages:
+Sample running product total messages:
 
 ```txt
 {"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":20,"total_purchases":106.76}
