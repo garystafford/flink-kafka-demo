@@ -17,7 +17,7 @@ apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group 'org.example'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.apache.flink:flink-connector-kafka:1.15.2'
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    implementation 'org.slf4j:slf4j-nop:2.0.0' // prevents runtime warnings...
 
     // test dependencies (TODO: Add unit tests...)
 //    testCompileOnly 'org.projectlombok:lombok:1.18.24'

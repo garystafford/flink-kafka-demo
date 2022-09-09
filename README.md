@@ -6,9 +6,9 @@ running total of individual drink quantities and total purchases to output Kafka
 
 * Demonstration uses
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
-  from 'Sales Data Generator' project.
+  from 'Sales Data Generator' project
 
-* Uber JAR for demonstration built with Gradle using JDK 8 Update 121.
+* Uber JAR built with Gradle using JDK 8 Update 121
 
 ## Video Demonstration
 
