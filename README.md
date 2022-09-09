@@ -60,7 +60,7 @@ Sample messages:
 # build uber jar using Gradle
 ./gradlew clean shadowJar
 
-# Upload via the Flink UI or copy to Flink Docker image
+# Upload via the Flink UI directly or copy to Flink Docker image
 FLINK_CONTAINER=$(docker container ls --filter  name=kafka-flink_jobmanager --format "{{.ID}}")
 docker cp build/libs/flink-kafka-demo-1.0-SNAPSHOT-all.jar ${FLINK_CONTAINER}:/tmp
 docker exec -it ${FLINK_CONTAINER} bash
