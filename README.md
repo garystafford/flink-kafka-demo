@@ -1,8 +1,9 @@
 # Apache Flink / Apache Kafka Streaming Analytics Demo
 
 [Apache Flink](https://flink.apache.org/) streaming data analytics demonstration, written in Java and
-using the [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Consumes a stream of sales transaction messages and publishes a stream of running totals of sales quantities and total purchases to a Kafka topic.
-
+using the [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator).
+Consumes a stream of sales transaction messages and publishes a stream of running totals of product transactions,
+quantities, and sales to a Kafka topic.
 
 * Demonstration uses
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
@@ -19,16 +20,16 @@ Short [YouTube video](https://youtu.be/ja0M_2zdbfs) demonstration of this projec
 Sample sales purchase messages:
 
 ```txt
-{"transaction_time": "2022-09-05 13:01:49.530434", "product_id": "IS01", "price": 5.49, "quantity": 2, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 10.98}
-{"transaction_time": "2022-09-05 13:01:50.761210", "product_id": "IS02", "price": 5.49, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.49}
-{"transaction_time": "2022-09-05 13:01:53.005900", "product_id": "SC05", "price": 5.99, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": true, "supplement_price": 1.99, "total_purchase": 7.18}
-{"transaction_time": "2022-09-05 13:01:55.283643", "product_id": "SC04", "price": 5.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.99}
-{"transaction_time": "2022-09-05 13:01:58.074699", "product_id": "CS08", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
-{"transaction_time": "2022-09-05 13:02:00.938037", "product_id": "SF05", "price": 5.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": true, "supplement_price": 1.99, "total_purchase": 7.98}
-{"transaction_time": "2022-09-05 13:02:03.193997", "product_id": "IS02", "price": 5.49, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.94}
-{"transaction_time": "2022-09-05 13:02:04.587453", "product_id": "IS03", "price": 5.49, "quantity": 3, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 14.82}
-{"transaction_time": "2022-09-05 13:02:05.741791", "product_id": "CS10", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
-{"transaction_time": "2022-09-05 13:02:07.981253", "product_id": "CS04", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
+{"transaction_time": "2022-09-09 18:15:14.260159", "product_id": "SF06", "price": 5.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.99}
+{"transaction_time": "2022-09-09 18:15:17.484820", "product_id": "CS09", "price": 4.99, "quantity": 2, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 8.98}
+{"transaction_time": "2022-09-09 18:15:19.711103", "product_id": "CS02", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
+{"transaction_time": "2022-09-09 18:15:22.942512", "product_id": "CS05", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
+{"transaction_time": "2022-09-09 18:15:26.086557", "product_id": "IS01", "price": 5.49, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.49}
+{"transaction_time": "2022-09-09 18:15:29.220133", "product_id": "SF03", "price": 5.99, "quantity": 2, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 11.98}
+{"transaction_time": "2022-09-09 18:15:32.351425", "product_id": "CS08", "price": 4.99, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.49}
+{"transaction_time": "2022-09-09 18:15:34.473913", "product_id": "CS05", "price": 4.99, "quantity": 3, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 14.97}
+{"transaction_time": "2022-09-09 18:15:35.706493", "product_id": "SC03", "price": 5.99, "quantity": 2, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 10.78}
+{"transaction_time": "2022-09-09 18:15:36.938348", "product_id": "CS09", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
 ```
 
 ## Output Message Stream
@@ -36,16 +37,16 @@ Sample sales purchase messages:
 Sample running product total messages:
 
 ```txt
-{"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":20,"total_purchases":106.76}
-{"event_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":4,"total_purchases":21.96}
-{"event_time":"2022-09-05T12:55:16.171876","product_id":"CS09","quantity":10,"total_purchases":48.90}
-{"event_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":16,"total_purchases":106.17}
-{"event_time":"2022-09-05T12:56:33.800787","product_id":"SC04","quantity":17,"total_purchases":114.15}
-{"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":21,"total_purchases":113.74}
-{"event_time":"2022-09-05T12:55:16.169814","product_id":"SC05","quantity":12,"total_purchases":84.01}
-{"event_time":"2022-09-05T12:55:16.173546","product_id":"SF07","quantity":12,"total_purchases":77.24}
-{"event_time":"2022-09-05T12:55:16.188792","product_id":"IS01","quantity":5,"total_purchases":29.44}
-{"event_time":"2022-09-05T12:55:16.185565","product_id":"CS08","quantity":23,"total_purchases":123.72}
+{"event_time":"2022-09-10T02:43:58.320625Z","product_id":"SC01","transactions":35,"quantities":47,"sales":316.90}
+{"event_time":"2022-09-10T02:43:59.528838Z","product_id":"CS10","transactions":23,"quantities":30,"sales":168.78}
+{"event_time":"2022-09-10T02:44:02.755865Z","product_id":"CS08","transactions":64,"quantities":70,"sales":358.79}
+{"event_time":"2022-09-10T02:44:03.962799Z","product_id":"SC04","transactions":52,"quantities":65,"sales":432.06}
+{"event_time":"2022-09-10T02:44:05.150230Z","product_id":"CS04","transactions":22,"quantities":27,"sales":135.70}
+{"event_time":"2022-09-10T02:44:06.458681Z","product_id":"SF05","transactions":36,"quantities":44,"sales":301.12}
+{"event_time":"2022-09-10T02:44:08.668936Z","product_id":"CS10","transactions":24,"quantities":31,"sales":173.77}
+{"event_time":"2022-09-10T02:44:11.889087Z","product_id":"SF03","transactions":22,"quantities":26,"sales":175.42}
+{"event_time":"2022-09-10T02:44:15.003075Z","product_id":"CS08","transactions":65,"quantities":71,"sales":365.07}
+{"event_time":"2022-09-10T02:44:16.209181Z","product_id":"SF07","transactions":51,"quantities":62,"sales":426.45}
 ```
 
 ## Apache Flink Dashboard Preview
@@ -125,8 +126,10 @@ kafka-console-consumer.sh \
 
 ## Docker Stack
 
-Demonstration uses Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml) from 'Sales Data Generator' project.
-  
+Demonstration uses
+Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
+from 'Sales Data Generator' project.
+
 See [bitnami/kafka](https://hub.docker.com/r/bitnami/kafka) on Docker Hub for more information about running Kafka
 locally using Docker.
 
@@ -161,4 +164,8 @@ CONTAINER ID   IMAGE                      PORTS                                 
 
 ---
 
-_The contents of this repository represent my viewpoints and not of my past or current employers, including Amazon Web Services (AWS). All third-party libraries, modules, plugins, and SDKs are the property of their respective owners. The author(s) assumes no responsibility or liability for any errors or omissions in the content of this site. The information contained in this site is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness or timeliness._
+_The contents of this repository represent my viewpoints and not of my past or current employers, including Amazon Web
+Services (AWS). All third-party libraries, modules, plugins, and SDKs are the property of their respective owners. The
+author(s) assumes no responsibility or liability for any errors or omissions in the content of this site. The
+information contained in this site is provided on an "as is" basis with no guarantees of completeness, accuracy,
+usefulness or timeliness._

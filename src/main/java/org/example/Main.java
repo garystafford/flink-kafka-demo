@@ -61,6 +61,7 @@ public class Main {
                 ).returns(Total.class)
                 .keyBy(Total::getProductId)
                 .reduce((total1, total2) -> {
+                    total1.setEventTime(Instant.now().toString());
                     total1.setTransactions(total1.getTransactions() + total2.getTransactions());
                     total1.setQuantities(total1.getQuantities() + total2.getQuantities());
                     total1.setSales(total1.getSales().add(total2.getSales()));
