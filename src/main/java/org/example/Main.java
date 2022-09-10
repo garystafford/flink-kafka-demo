@@ -20,6 +20,7 @@ import org.example.model.Total;
 import org.example.schema.PurchaseDeserializationSchema;
 import org.example.schema.TotalSerializationSchema;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class Main {
@@ -51,7 +52,7 @@ public class Main {
         DataStream<Total> runningTotals = purchases
                 .flatMap((FlatMapFunction<Purchase, Total>) (purchase, out) -> out.collect(
                         new Total(
-                                LocalDateTime.now().toString(),
+                                Instant.now().toString(),
                                 purchase.getProductId(),
                                 1,
                                 purchase.getQuantity(),
