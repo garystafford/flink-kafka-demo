@@ -71,20 +71,56 @@ docker exec -it ${FLINK_CONTAINER} bash
 flink run -c org.example.Main /tmp/flink-kafka-demo-1.0.0-all.jar
 ```
 
-## Check the Results
+## Kafka
+
+Helpful Kafka commands.
 
 ```shell
+docker exec -it $(docker container ls --filter  name=kafka-flink_kafka --format "{{.ID}}") bash
+
 export BOOTSTRAP_SERVERS="localhost:9092"
 export INPUT_TOPIC="demo.purchases"
 export OUTPUT_TOPIC="demo.totals"
 
+# list all topics
+kafka-topics.sh --list \
+    --bootstrap-server $BOOTSTRAP_SERVERS
+
+# describe topic
+kafka-topics.sh --describe \
+    --topic $OUTPUT_TOPIC \
+    --bootstrap-server $BOOTSTRAP_SERVERS
+
+# delete topic
+kafka-topics.sh --delete \
+    --topic $INPUT_TOPIC \
+    --bootstrap-server $BOOTSTRAP_SERVERS
+
+kafka-topics.sh --delete \
+    --topic $OUTPUT_TOPIC \
+    --bootstrap-server $BOOTSTRAP_SERVERS
+
+# optional: create new topic (or they will be automatically created
+kafka-topics.sh --create \
+    --topic $INPUT_TOPIC \
+    --partitions 1 --replication-factor 1 \
+    --config cleanup.policy=compact \
+    --bootstrap-server $BOOTSTRAP_SERVERS
+
+kafka-topics.sh --create \
+    --topic $OUTPUT_TOPIC \
+    --partitions 1 --replication-factor 1 \
+    --config cleanup.policy=compact \
+    --bootstrap-server $BOOTSTRAP_SERVERS
+
+# view messages
 kafka-console-consumer.sh \
-    --bootstrap-server $BOOTSTRAP_SERVERS \
-    --topic $INPUT_TOPIC --from-beginning
+    --topic $INPUT_TOPIC --from-beginning \
+    --bootstrap-server $BOOTSTRAP_SERVERS
 
 kafka-console-consumer.sh \
-    --bootstrap-server $BOOTSTRAP_SERVERS \
-    --topic $OUTPUT_TOPIC --from-beginning
+    --topic $OUTPUT_TOPIC --from-beginning \
+    --bootstrap-server $BOOTSTRAP_SERVERS
 ```
 
 ## Docker Stack
