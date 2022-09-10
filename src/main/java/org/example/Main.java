@@ -52,7 +52,7 @@ public class Main {
         DataStream<Total> runningTotals = purchases
                 .flatMap((FlatMapFunction<Purchase, Total>) (purchase, out) -> out.collect(
                         new Total(
-                                "",
+                                purchase.getTransactionTime(),
                                 purchase.getProductId(),
                                 1,
                                 purchase.getQuantity(),
@@ -61,7 +61,6 @@ public class Main {
                 ).returns(Total.class)
                 .keyBy(Total::getProductId)
                 .reduce((total1, total2) -> {
-                    total2.setEventTime(Instant.now().toString());
                     total2.setTransactions(total1.getTransactions() + total2.getTransactions());
                     total2.setQuantities(total1.getQuantities() + total2.getQuantities());
                     total2.setSales(total1.getSales().add(total2.getSales()));
