@@ -1,7 +1,7 @@
 package org.example;
 
 // Purpose: Read sales transaction data from a Kafka topic,
-//          aggregates product quantities and total sales on data stream,
+//          aggregates product transactions, quantities, and sales on data stream,
 //          and writes results to a second Kafka topic.
 // Author:  Gary A. Stafford
 // Date: 2022-09-05
@@ -20,16 +20,13 @@ import org.example.model.Total;
 import org.example.schema.PurchaseDeserializationSchema;
 import org.example.schema.TotalSerializationSchema;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 public class Main {
 
     // assumes PLAINTEXT authentication
-    static String BOOTSTRAP_SERVERS = "kafka:29092";
-    static String CONSUMER_GROUP_ID = "flink_demo";
-    static String INPUT_TOPIC = "demo.purchases";
-    static String OUTPUT_TOPIC = "demo.totals";
+    final static String BOOTSTRAP_SERVERS = "kafka:29092";
+    final static String CONSUMER_GROUP_ID = "flink_demo";
+    final static String INPUT_TOPIC = "demo.purchases";
+    final static String OUTPUT_TOPIC = "demo.totals";
 
     public static void main(String[] args) throws Exception {
         flinkKafkaPipeline();
