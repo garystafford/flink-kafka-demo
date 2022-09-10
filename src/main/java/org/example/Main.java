@@ -52,7 +52,7 @@ public class Main {
         DataStream<Total> runningTotals = purchases
                 .flatMap((FlatMapFunction<Purchase, Total>) (purchase, out) -> out.collect(
                         new Total(
-                                Instant.now().toString(),
+                                "",
                                 purchase.getProductId(),
                                 1,
                                 purchase.getQuantity(),
