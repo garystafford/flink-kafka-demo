@@ -27,7 +27,7 @@ public class Main {
 
     // assumes PLAINTEXT authentication
     static String BOOTSTRAP_SERVERS = "kafka:29092";
-    static String CONSUMER_GROUP_ID = "demo_group";
+    static String CONSUMER_GROUP_ID = "flink_demo";
     static String INPUT_TOPIC = "demo.purchases";
     static String OUTPUT_TOPIC = "demo.totals";
 
