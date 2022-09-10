@@ -49,19 +49,21 @@ public class Main {
         DataStream<Purchase> purchases = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
         DataStream<Total> runningTotals = purchases
-                .flatMap((FlatMapFunction<Purchase, Total>) (value, out) -> out.collect(
+                .flatMap((FlatMapFunction<Purchase, Total>) (purchase, out) -> out.collect(
                         new Total(
                                 LocalDateTime.now().toString(),
-                                value.getProductId(),
-                                value.getQuantity(),
-                                value.getTotalPurchase()
+                                purchase.getProductId(),
+                                1,
+                                purchase.getQuantity(),
+                                purchase.getTotalPurchase()
                         ))
                 ).returns(Total.class)
                 .keyBy(Total::getProductId)
-                .reduce((t1, t2) -> {
-                    t1.setQuantity(t1.getQuantity() + t2.getQuantity());
-                    t1.setTotalPurchases(t1.getTotalPurchases().add(t2.getTotalPurchases()));
-                    return t1;
+                .reduce((total1, total2) -> {
+                    total1.setTransactions(total1.getTransactions() + total2.getTransactions());
+                    total1.setQuantities(total1.getQuantities() + total2.getQuantities());
+                    total1.setSales(total1.getSales().add(total2.getSales()));
+                    return total1;
                 });
 
         KafkaSink<Total> sink = KafkaSink.<Total>builder()

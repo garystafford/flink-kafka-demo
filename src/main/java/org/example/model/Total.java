@@ -19,9 +19,12 @@ public class Total {
     @JsonProperty("product_id")
     String productId;
 
-    @JsonProperty("quantity")
-    Integer quantity;
+    @JsonProperty("transactions")
+    Integer transactions;
 
-    @JsonProperty("total_purchases")
-    BigDecimal totalPurchases;
+    @JsonProperty("quantities")
+    Integer quantities;
+
+    @JsonProperty("sales")
+    BigDecimal sales;
 }
