@@ -20,13 +20,13 @@ import org.example.model.Total;
 import org.example.schema.PurchaseDeserializationSchema;
 import org.example.schema.TotalSerializationSchema;
 
-public class Main {
+public class RunningTotals {
 
     // assumes PLAINTEXT authentication
     final static String BOOTSTRAP_SERVERS = "kafka:29092";
-    final static String CONSUMER_GROUP_ID = "flink_demo";
+    final static String CONSUMER_GROUP_ID = "flink_reduce_demo";
     final static String INPUT_TOPIC = "demo.purchases";
-    final static String OUTPUT_TOPIC = "demo.totals";
+    final static String OUTPUT_TOPIC = "demo.running.totals";
 
     public static void main(String[] args) throws Exception {
         flinkKafkaPipeline();
@@ -76,7 +76,7 @@ public class Main {
 
         runningTotals.sinkTo(sink);
 
-        env.execute("Flink Kafka Pipeline");
+        env.execute("Running Totals Demo");
 
     }
 }

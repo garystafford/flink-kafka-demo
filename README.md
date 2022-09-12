@@ -1,9 +1,10 @@
 # Apache Flink / Apache Kafka Streaming Analytics Demo
 
 [Apache Flink](https://flink.apache.org/) streaming data analytics demonstration, written in Java and
-using the [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator).
-Consumes a stream of sales transaction messages and publishes a stream of running totals of product transactions,
-quantities, and sales to a Kafka topic.
+using the [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). 
+
+* `org.example.RunningTotals`: Consumes a stream of sales transaction messages and publishes a stream of running totals of product transactions, quantities, and sales to a Kafka topic
+* `org.example.JoinStreams`: Consumes a stream of product and purchase messages from two different Kafka topics, joins both into an enriched purchase object, and writes results to a third Kafka topic
 
 * Demonstration uses
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
@@ -34,7 +35,7 @@ Sample sales purchase messages:
 
 ## Output Message Stream
 
-Sample running product total messages:
+Sample running totals messages:
 
 ```txt
 {"event_time":"2022-09-10T02:43:58.320625Z","product_id":"SC01","transactions":35,"quantities":47,"sales":316.90}
@@ -49,11 +50,26 @@ Sample running product total messages:
 {"event_time":"2022-09-10T02:44:16.209181Z","product_id":"SF07","transactions":51,"quantities":62,"sales":426.45}
 ```
 
+Sample enriched purchases messages:
+
+```txt
+{"transaction_time":"2022-09-12 16:39:48.384120","product_id":"SF07","product_category":"Superfoods Smoothies","product_name":"Detox Island Green","product_size":"24 oz.","product_cogs":2.10,"product_price":5.99,"contains_fruit":true,"contains_veggies":true,"contains_nuts":false,"contains_caffeine":false,"purchase_price":5.99,"purchase_quantity":1,"is_member":false,"member_discount":0.00,"add_supplements":true,"supplement_price":1.99,"total_purchase":7.98}
+{"transaction_time":"2022-09-12 16:39:51.620888","product_id":"SC03","product_category":"Supercharged Smoothies","product_name":"Health Nut","product_size":"24 oz.","product_cogs":2.70,"product_price":5.99,"contains_fruit":false,"contains_veggies":false,"contains_nuts":true,"contains_caffeine":false,"purchase_price":5.99,"purchase_quantity":1,"is_member":true,"member_discount":0.10,"add_supplements":false,"supplement_price":0.00,"total_purchase":5.39}
+{"transaction_time":"2022-09-12 16:39:54.862711","product_id":"SF05","product_category":"Superfoods Smoothies","product_name":"Caribbean C-Burst","product_size":"24 oz.","product_cogs":2.10,"product_price":5.99,"contains_fruit":true,"contains_veggies":false,"contains_nuts":false,"contains_caffeine":false,"purchase_price":5.99,"purchase_quantity":2,"is_member":false,"member_discount":0.00,"add_supplements":true,"supplement_price":1.99,"total_purchase":15.96}
+{"transaction_time":"2022-09-12 16:39:57.099214","product_id":"SC01","product_category":"Supercharged Smoothies","product_name":"Triple Berry Oat","product_size":"24 oz.","product_cogs":2.70,"product_price":5.99,"contains_fruit":true,"contains_veggies":false,"contains_nuts":false,"contains_caffeine":false,"purchase_price":5.99,"purchase_quantity":1,"is_member":true,"member_discount":0.10,"add_supplements":true,"supplement_price":1.99,"total_purchase":7.18}
+{"transaction_time":"2022-09-12 16:39:58.330286","product_id":"IS01","product_category":"Indulgent Smoothies","product_name":"Bahama Mama","product_size":"24 oz.","product_cogs":2.20,"product_price":5.49,"contains_fruit":true,"contains_veggies":false,"contains_nuts":false,"contains_caffeine":false,"purchase_price":5.49,"purchase_quantity":1,"is_member":true,"member_discount":0.10,"add_supplements":false,"supplement_price":0.00,"total_purchase":4.94}
+{"transaction_time":"2022-09-12 16:40:00.554699","product_id":"SC04","product_category":"Supercharged Smoothies","product_name":"Lean Machine","product_size":"24 oz.","product_cogs":2.70,"product_price":5.99,"contains_fruit":false,"contains_veggies":true,"contains_nuts":true,"contains_caffeine":true,"purchase_price":5.99,"purchase_quantity":1,"is_member":false,"member_discount":0.00,"add_supplements":true,"supplement_price":1.99,"total_purchase":7.98}
+{"transaction_time":"2022-09-12 16:40:03.785093","product_id":"SF04","product_category":"Superfoods Smoothies","product_name":"Pomegranate Plunge","product_size":"24 oz.","product_cogs":2.10,"product_price":5.99,"contains_fruit":true,"contains_veggies":false,"contains_nuts":false,"contains_caffeine":false,"purchase_price":5.99,"purchase_quantity":1,"is_member":false,"member_discount":0.00,"add_supplements":true,"supplement_price":1.99,"total_purchase":7.98}
+{"transaction_time":"2022-09-12 16:40:06.710135","product_id":"SC03","product_category":"Supercharged Smoothies","product_name":"Health Nut","product_size":"24 oz.","product_cogs":2.70,"product_price":5.99,"contains_fruit":false,"contains_veggies":false,"contains_nuts":true,"contains_caffeine":false,"purchase_price":5.99,"purchase_quantity":1,"is_member":false,"member_discount":0.00,"add_supplements":false,"supplement_price":0.00,"total_purchase":5.99}
+{"transaction_time":"2022-09-12 16:40:08.859089","product_id":"IS02","product_category":"Indulgent Smoothies","product_name":"Peanut Butter Cup","product_size":"24 oz.","product_cogs":2.20,"product_price":5.49,"contains_fruit":false,"contains_veggies":false,"contains_nuts":true,"contains_caffeine":false,"purchase_price":5.49,"purchase_quantity":1,"is_member":false,"member_discount":0.00,"add_supplements":false,"supplement_price":0.00,"total_purchase":5.49}
+{"transaction_time":"2022-09-12 16:40:10.061813","product_id":"SC03","product_category":"Supercharged Smoothies","product_name":"Health Nut","product_size":"24 oz.","product_cogs":2.70,"product_price":5.99,"contains_fruit":false,"contains_veggies":false,"contains_nuts":true,"contains_caffeine":false,"purchase_price":5.99,"purchase_quantity":1,"is_member":true,"member_discount":0.10,"add_supplements":false,"supplement_price":0.00,"total_purchase":5.39}
+```
+
 ## Apache Flink Dashboard Preview
 
-![Apache Flink Dashboard 1](screengrabs/flink_dashboard1.png)
-
 ![Apache Flink Dashboard 2](screengrabs/flink_dashboard2.png)
+
+![Apache Flink Dashboard 1](screengrabs/flink_dashboard1.png)
 
 ## Compile and Run Flink Job
 
@@ -69,7 +85,9 @@ FLINK_CONTAINER=$(docker container ls --filter  name=kafka-flink_jobmanager --fo
 docker cp build/libs/flink-kafka-demo-1.0.0-all.jar ${FLINK_CONTAINER}:/tmp
 docker exec -it ${FLINK_CONTAINER} bash
 
-flink run -c org.example.Main /tmp/flink-kafka-demo-1.0.0-all.jar
+flink run -c org.example.RunningTotals /tmp/flink-kafka-demo-1.0.0-all.jar
+
+flink run -c org.example.JoinStreams /tmp/flink-kafka-demo-1.0.0-all.jar
 ```
 
 ## Kafka
@@ -80,8 +98,13 @@ Helpful Kafka commands.
 docker exec -it $(docker container ls --filter  name=kafka-flink_kafka --format "{{.ID}}") bash
 
 export BOOTSTRAP_SERVERS="localhost:9092"
+
 export INPUT_TOPIC="demo.purchases"
-export OUTPUT_TOPIC="demo.totals"
+export OUTPUT_TOPIC="demo.running.totals"
+
+export PRODUCT_TOPIC="demo.products";
+export PURCHASE_TOPIC="demo.purchases";
+export PURCHASES_ENRICHED_TOPIC="demo.purchases.enriched";
 
 # list all topics
 kafka-topics.sh --list \
@@ -161,7 +184,7 @@ CONTAINER ID   IMAGE                      PORTS                                 
 
 * <https://www.baeldung.com/kafka-flink-data-pipeline>
 * <https://github.com/eugenp/tutorials/tree/master/apache-kafka/src/main/java/com/baeldung/flink>
-
+* <https://github.com/apache/flink/blob/master/flink-examples/flink-examples-table/src/main/java/org/apache/flink/table/examples/java/basics/StreamSQLExample.java>
 ---
 
 _The contents of this repository represent my viewpoints and not of my past or current employers, including Amazon Web

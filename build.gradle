@@ -13,6 +13,13 @@ plugins {
     id 'java'
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.example.JoinStreams'
+        )
+    }
+}
 apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
@@ -25,11 +32,13 @@ repositories {
 
 dependencies {
 
-    compileOnly 'org.apache.flink:flink-core:1.15.2'
-    compileOnly 'org.apache.flink:flink-streaming-java:1.15.2'
-    implementation 'org.apache.flink:flink-connector-kafka:1.15.2'
-    compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly "org.apache.flink:flink-streaming-java:1.15.2"
+    compileOnly 'org.apache.flink:flink-core:1.15.2'
+    compileOnly 'org.apache.flink:flink-table-api-java-bridge:1.15.2'
+    compileOnly 'org.apache.flink:flink-table:1.15.2'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    implementation 'org.apache.flink:flink-connector-kafka:1.15.2'
     implementation 'org.slf4j:slf4j-nop:2.0.0' // prevents runtime warnings...
 
     // test dependencies (TODO: Add unit tests...)
