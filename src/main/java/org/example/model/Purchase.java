@@ -16,6 +16,9 @@ public class Purchase {
     @JsonProperty("transaction_time")
     String transactionTime;
 
+    @JsonProperty("transaction_id")
+    String transactionId;
+
     @JsonProperty("product_id")
     String productId;
 

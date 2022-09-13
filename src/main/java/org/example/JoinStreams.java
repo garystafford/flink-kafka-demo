@@ -71,6 +71,7 @@ public class JoinStreams {
                 tableEnv.sqlQuery(
                         "SELECT " +
                                 "purchases.transactionTime, " +
+                                "purchases.transactionId, " +
                                 "purchases.productId, " +
                                 "products.category, " +
                                 "products.item, " +
@@ -88,10 +89,10 @@ public class JoinStreams {
                                 "purchases.addSupplements, " +
                                 "purchases.supplementPrice, " +
                                 "purchases.totalPurchase " +
-                        "FROM " +
+                                "FROM " +
                                 "products " +
-                                    "JOIN purchases " +
-                                        "ON products.productId = purchases.productId"
+                                "JOIN purchases " +
+                                "ON products.productId = purchases.productId"
                 );
 
         DataStream<PurchaseEnriched> purchasesEnrichedTable = tableEnv.toDataStream(result,
