@@ -78,7 +78,7 @@ Sample enriched purchases messages:
 JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-11.0.16.1/Contents/Home
 
 # build uber jar using Gradle
-
+./gradlew clean shadowJar
 
 # Upload via the Flink UI or copy to Flink Docker image
 FLINK_CONTAINER=$(docker container ls --filter  name=kafka-flink_jobmanager --format "{{.ID}}")
