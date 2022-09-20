@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Total {
+public class RunningTotal {
     @JsonProperty("event_time")
     String eventTime;
 

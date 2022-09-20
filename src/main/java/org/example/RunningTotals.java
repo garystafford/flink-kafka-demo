@@ -16,9 +16,9 @@ import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsIni
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.example.model.Purchase;
-import org.example.model.Total;
+import org.example.model.RunningTotal;
 import org.example.schema.PurchaseDeserializationSchema;
-import org.example.schema.TotalSerializationSchema;
+import org.example.schema.RunningTotalSerializationSchema;
 
 public class RunningTotals {
 
@@ -46,29 +46,29 @@ public class RunningTotals {
 
         DataStream<Purchase> purchases = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
-        DataStream<Total> runningTotals = purchases
-                .flatMap((FlatMapFunction<Purchase, Total>) (purchase, out) -> out.collect(
-                        new Total(
+        DataStream<RunningTotal> runningTotals = purchases
+                .flatMap((FlatMapFunction<Purchase, RunningTotal>) (purchase, out) -> out.collect(
+                        new RunningTotal(
                                 purchase.getTransactionTime(),
                                 purchase.getProductId(),
                                 1,
                                 purchase.getQuantity(),
                                 purchase.getTotalPurchase()
                         ))
-                ).returns(Total.class)
-                .keyBy(Total::getProductId)
-                .reduce((total1, total2) -> {
-                    total2.setTransactions(total1.getTransactions() + total2.getTransactions());
-                    total2.setQuantities(total1.getQuantities() + total2.getQuantities());
-                    total2.setSales(total1.getSales().add(total2.getSales()));
-                    return total2;
+                ).returns(RunningTotal.class)
+                .keyBy(RunningTotal::getProductId)
+                .reduce((runningTotal1, runningTotal2) -> {
+                    runningTotal2.setTransactions(runningTotal1.getTransactions() + runningTotal2.getTransactions());
+                    runningTotal2.setQuantities(runningTotal1.getQuantities() + runningTotal2.getQuantities());
+                    runningTotal2.setSales(runningTotal1.getSales().add(runningTotal2.getSales()));
+                    return runningTotal2;
                 });
 
-        KafkaSink<Total> sink = KafkaSink.<Total>builder()
+        KafkaSink<RunningTotal> sink = KafkaSink.<RunningTotal>builder()
                 .setBootstrapServers(BOOTSTRAP_SERVERS)
                 .setRecordSerializer(KafkaRecordSerializationSchema.builder()
                         .setTopic(OUTPUT_TOPIC)
-                        .setValueSerializationSchema(new TotalSerializationSchema())
+                        .setValueSerializationSchema(new RunningTotalSerializationSchema())
                         .build()
                 )
                 .setDeliverGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
