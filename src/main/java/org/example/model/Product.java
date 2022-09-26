@@ -34,8 +34,8 @@ public class Product {
     @JsonProperty("price")
     BigDecimal price;
 
-    @JsonProperty("inventory")
-    Integer inventory;
+    @JsonProperty("inventory_level")
+    Integer inventoryLevel;
 
     @JsonProperty("contains_fruit")
     Boolean containsFruit;
