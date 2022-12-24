@@ -8,6 +8,7 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.annotatio
 import org.apache.flink.table.annotation.DataTypeHint;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @JsonSerialize
 @NoArgsConstructor
@@ -16,6 +17,9 @@ import java.math.BigDecimal;
 public class PurchaseEnriched {
     @JsonProperty("transaction_time")
     String transactionTime;
+
+    @JsonProperty("transaction_timestamp")
+    Timestamp transactionTimestamp;
 
     @JsonProperty("transaction_id")
     String transactionId;

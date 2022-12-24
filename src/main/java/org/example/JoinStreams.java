@@ -71,6 +71,7 @@ public class JoinStreams {
                 tableEnv.sqlQuery(
                         "SELECT " +
                                 "purchases.transactionTime, " +
+                                "TO_TIMESTAMP(purchases.transactionTime), " +
                                 "purchases.transactionId, " +
                                 "purchases.productId, " +
                                 "products.category, " +
