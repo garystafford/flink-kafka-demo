@@ -1,10 +1,10 @@
 package org.example;
 
 // Purpose: Read sales transaction data from a Kafka topic,
-//          aggregates product transactions, quantities, and sales on data stream,
+//          aggregates transactions, quantities, and sales by product,
 //          and writes results to a second Kafka topic.
 // Author:  Gary A. Stafford
-// Date: 2022-09-05
+// Date: 2022-12-28
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.FlatMapFunction;
@@ -20,26 +20,39 @@ import org.example.model.RunningTotal;
 import org.example.schema.PurchaseDeserializationSchema;
 import org.example.schema.RunningTotalSerializationSchema;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class RunningTotals {
 
-    // assumes PLAINTEXT authentication
-    final static String BOOTSTRAP_SERVERS = "kafka:29092";
-    final static String CONSUMER_GROUP_ID = "flink_reduce_demo";
-    final static String INPUT_TOPIC = "demo.purchases";
-    final static String OUTPUT_TOPIC = "demo.running.totals";
-
     public static void main(String[] args) throws Exception {
-        flinkKafkaPipeline();
+        Properties prop = getProperties();
+        flinkKafkaPipeline(prop);
     }
 
-    public static void flinkKafkaPipeline() throws Exception {
+    private static Properties getProperties() {
+        Properties prop = new Properties();
+
+        try (InputStream propsInput =
+                     JoinStreams.class.getClassLoader().getResourceAsStream("config.properties")) {
+            prop.load(propsInput);
+            return prop;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return prop;
+    }
+
+    public static void flinkKafkaPipeline(Properties prop) throws Exception {
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+        // assumes PLAINTEXT authentication
         KafkaSource<Purchase> source = KafkaSource.<Purchase>builder()
-                .setBootstrapServers(BOOTSTRAP_SERVERS)
-                .setTopics(INPUT_TOPIC)
-                .setGroupId(CONSUMER_GROUP_ID)
+                .setBootstrapServers(prop.getProperty("BOOTSTRAP_SERVERS"))
+                .setTopics(prop.getProperty("PURCHASES_TOPIC"))
+                .setGroupId("flink_reduce_demo")
                 .setStartingOffsets(OffsetsInitializer.earliest())
                 .setValueOnlyDeserializer(new PurchaseDeserializationSchema())
                 .build();
@@ -65,9 +78,9 @@ public class RunningTotals {
                 });
 
         KafkaSink<RunningTotal> sink = KafkaSink.<RunningTotal>builder()
-                .setBootstrapServers(BOOTSTRAP_SERVERS)
+                .setBootstrapServers(prop.getProperty("BOOTSTRAP_SERVERS"))
                 .setRecordSerializer(KafkaRecordSerializationSchema.builder()
-                        .setTopic(OUTPUT_TOPIC)
+                        .setTopic(prop.getProperty("RUNNING_TOTALS_TOPIC"))
                         .setValueSerializationSchema(new RunningTotalSerializationSchema())
                         .build()
                 )
@@ -76,7 +89,7 @@ public class RunningTotals {
 
         runningTotals.sinkTo(sink);
 
-        env.execute("Running Totals Demo");
+        env.execute("Flink Running Totals Demo");
 
     }
 }

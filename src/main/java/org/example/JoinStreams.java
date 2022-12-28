@@ -1,10 +1,10 @@
 package org.example;
 
-// Purpose: Read products data and sales transaction data from a Kafka topic,
+// Purpose: Read products and transactions data from Kafka topics,
 //          joins both datasets into enriched purchases,
-//          and writes results to a second Kafka topic.
+//          and writes results to a new Kafka topic.
 // Author:  Gary A. Stafford
-// Date: 2022-09-12
+// Date: 2022-12-28
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.connector.base.DeliveryGuarantee;
@@ -23,28 +23,40 @@ import org.example.schema.ProductDeserializationSchema;
 import org.example.schema.PurchaseDeserializationSchema;
 import org.example.schema.PurchaseEnrichedSerializationSchema;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class JoinStreams {
 
-    // assumes PLAINTEXT authentication
-    final static String BOOTSTRAP_SERVERS = "kafka:29092";
-    final static String CONSUMER_GROUP_ID = "flink_join_demo";
-    final static String PRODUCT_TOPIC = "demo.products";
-    final static String PURCHASE_TOPIC = "demo.purchases";
-    final static String PURCHASES_ENRICHED_TOPIC = "demo.purchases.enriched";
-
     public static void main(String[] args) throws Exception {
-        flinkKafkaPipeline();
+        Properties prop = getProperties();
+        flinkKafkaPipeline(prop);
     }
 
-    public static void flinkKafkaPipeline() throws Exception {
+    private static Properties getProperties() {
+        Properties prop = new Properties();
+
+        try (InputStream propsInput =
+                     JoinStreams.class.getClassLoader().getResourceAsStream("config.properties")) {
+            prop.load(propsInput);
+            return prop;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return prop;
+    }
+
+    public static void flinkKafkaPipeline(Properties prop) throws Exception {
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
 
+        // assumes PLAINTEXT authentication
         KafkaSource<Product> productSource = KafkaSource.<Product>builder()
-                .setBootstrapServers(BOOTSTRAP_SERVERS)
-                .setTopics(PRODUCT_TOPIC)
-                .setGroupId(CONSUMER_GROUP_ID)
+                .setBootstrapServers(prop.getProperty("BOOTSTRAP_SERVERS"))
+                .setTopics(prop.getProperty("PRODUCTS_TOPIC"))
+                .setGroupId("flink_join_demo")
                 .setStartingOffsets(OffsetsInitializer.earliest())
                 .setValueOnlyDeserializer(new ProductDeserializationSchema())
                 .build();
@@ -55,9 +67,9 @@ public class JoinStreams {
         tableEnv.createTemporaryView("products", productsStream);
 
         KafkaSource<Purchase> purchasesSource = KafkaSource.<Purchase>builder()
-                .setBootstrapServers(BOOTSTRAP_SERVERS)
-                .setTopics(PURCHASE_TOPIC)
-                .setGroupId(CONSUMER_GROUP_ID)
+                .setBootstrapServers(prop.getProperty("BOOTSTRAP_SERVERS"))
+                .setTopics(prop.getProperty("PURCHASES_TOPIC"))
+                .setGroupId("flink_join_demo")
                 .setStartingOffsets(OffsetsInitializer.earliest())
                 .setValueOnlyDeserializer(new PurchaseDeserializationSchema())
                 .build();
@@ -100,9 +112,9 @@ public class JoinStreams {
                 PurchaseEnriched.class);
 
         KafkaSink<PurchaseEnriched> sink = KafkaSink.<PurchaseEnriched>builder()
-                .setBootstrapServers(BOOTSTRAP_SERVERS)
+                .setBootstrapServers(prop.getProperty("BOOTSTRAP_SERVERS"))
                 .setRecordSerializer(KafkaRecordSerializationSchema.builder()
-                        .setTopic(PURCHASES_ENRICHED_TOPIC)
+                        .setTopic(prop.getProperty("PURCHASES_ENRICHED_TOPIC"))
                         .setValueSerializationSchema(new PurchaseEnrichedSerializationSchema())
                         .build()
                 )
@@ -111,7 +123,7 @@ public class JoinStreams {
 
         purchasesEnrichedTable.sinkTo(sink);
 
-        env.execute("Stream Join Demo");
+        env.execute("Flink Streaming Join Demo");
 
     }
 }
