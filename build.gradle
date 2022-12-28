@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'gradle.plugin.com.github.johnrengelman:shadow:7.1.2'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.42.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.44.0'
     }
 }
 
@@ -36,7 +36,7 @@ repositories {
 dependencies {
 
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    compileOnly "org.apache.flink:flink-streaming-java:1.16.0"
+    compileOnly 'org.apache.flink:flink-streaming-java:1.16.0'
     compileOnly 'org.apache.flink:flink-core:1.16.0'
     compileOnly 'org.apache.flink:flink-table-api-java-bridge:1.16.0'
     compileOnly 'org.apache.flink:flink-table:1.16.0'
