@@ -62,7 +62,7 @@ public class JoinStreams {
                 .build();
 
         DataStream<Product> productsStream = env.fromSource(
-                productSource, WatermarkStrategy.noWatermarks(), "Kafka Product Source");
+                productSource, WatermarkStrategy.noWatermarks(), "Kafka Products Source");
 
         tableEnv.createTemporaryView("products", productsStream);
 
