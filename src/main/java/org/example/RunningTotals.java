@@ -83,8 +83,7 @@ public class RunningTotals {
                         .setTopic(prop.getProperty("RUNNING_TOTALS_TOPIC"))
                         .setValueSerializationSchema(new RunningTotalSerializationSchema())
                         .build()
-                )
-                .setDeliverGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
+                ).setDeliveryGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
                 .build();
 
         runningTotals.sinkTo(sink);

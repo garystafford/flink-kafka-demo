@@ -117,8 +117,7 @@ public class JoinStreams {
                         .setTopic(prop.getProperty("PURCHASES_ENRICHED_TOPIC"))
                         .setValueSerializationSchema(new PurchaseEnrichedSerializationSchema())
                         .build()
-                )
-                .setDeliverGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
+                ).setDeliveryGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
                 .build();
 
         purchasesEnrichedTable.sinkTo(sink);
